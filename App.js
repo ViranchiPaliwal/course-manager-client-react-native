@@ -2,6 +2,7 @@ import React, {Component}  from 'react';
 import {View, ScrollView} from 'react-native';
 import CourseList from './components/CourseList'
 import ModuleList from './components/ModuleList'
+import LessonList from './components/LessonList'
 import { createStackNavigator } from 'react-navigation'
 
 class Home extends React.Component {
@@ -21,7 +22,8 @@ class Home extends React.Component {
 }
 const App = createStackNavigator({
     CourseList,
-    ModuleList
+    ModuleList,
+    LessonList
 })
 
 export default App
