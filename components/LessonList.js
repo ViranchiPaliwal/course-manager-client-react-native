@@ -16,9 +16,11 @@ class LessonList extends Component {
         const {navigation} = this.props;
         const courseId = navigation.getParam("courseId")
         const moduleId = navigation.getParam("moduleId")
+        this.setState({courseId: courseId})
+        this.setState({moduleId: moduleId})
         fetch("http://localhost:8080/api/course/"+courseId+"/module/"+moduleId+"/lesson")
             .then(response => (response.json()))
-            .then(lessons => this.setState({lessons}))
+            .then(lessons => this.setState({lessons: lessons}))
     }
     render() {
         return(
@@ -27,7 +29,9 @@ class LessonList extends Component {
                     (lesson, index) => (
                         <ListItem
                             onPress={() => this.props.navigation
-                                .navigate("TopicList", {lessonId: lesson.id})}
+                                .navigate("TopicList", {lessonId: lesson.id,
+                                                        courseId: this.state.courseId,
+                                                        moduleId: this.state.moduleId})}
                             key={index}
                             title={lesson.title}/>))}
             </View>
