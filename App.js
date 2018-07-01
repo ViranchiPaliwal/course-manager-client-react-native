@@ -1,23 +1,25 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {Component}  from 'react';
+import {View, ScrollView} from 'react-native';
+import CourseList from './components/CourseList'
+import { createStackNavigator } from 'react-navigation'
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
-    );
-  }
+class Home extends React.Component {
+    static navigationOptions = {
+        title: 'Home'
+    }
+    constructor(props) {
+        super(props)
+    }
+    render() {
+        return(
+            <ScrollView>
+                <StatusBar barStyle="light-content"/>
+            </ScrollView>
+        )
+    }
 }
+const App = createStackNavigator({
+    CourseList
+})
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
