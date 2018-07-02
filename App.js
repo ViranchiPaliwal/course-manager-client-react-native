@@ -8,21 +8,6 @@ import WidgetList from './components/WidgetList'
 
 import { createStackNavigator } from 'react-navigation'
 
-class Home extends React.Component {
-    static navigationOptions = {
-        title: 'Home'
-    }
-    constructor(props) {
-        super(props)
-    }
-    render() {
-        return(
-            <ScrollView>
-                <StatusBar barStyle="light-content"/>
-            </ScrollView>
-        )
-    }
-}
 const App = createStackNavigator({
     CourseList,
     ModuleList,
