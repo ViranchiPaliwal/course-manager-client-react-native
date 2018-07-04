@@ -15,5 +15,30 @@ export default StyleSheet.create({
     buttonStyle: {
         padding:5,
         borderRadius: 5
+    },
+    scrollViewStyle: {
+        padding:15
+    },
+    addWidgetView: {
+        backgroundColor:'#007bff',
+        padding:10,
+        flex:1,
+        flexDirection:'row',
+        margin:10
+    },
+    addWidgetTextView: {
+        flex:9
+    },
+    addWidgetIconView: {
+        flex:1,
+        paddingTop:3
+    },
+    addWidgetTextViewInput: {
+        height: 30,
+        borderColor: 'black',
+        borderWidth: 1,
+        backgroundColor:'white',
+        borderRadius:5,
+        paddingLeft:5
     }
 })

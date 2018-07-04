@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-import {View, ScrollView, TextInput} from 'react-native'
+import {View, Alert, ScrollView, TextInput} from 'react-native'
 import style from '../styles/styles';
 import {Text, Button, FormLabel, FormInput, FormValidationMessage} from 'react-native-elements'
+import AssignmentService from "../services/AssignmentService";
 
 class Assignment extends Component {
     static navigationOptions = {
@@ -12,17 +13,27 @@ class Assignment extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            topicId: '',
+            assignmentId: '',
             title: '',
             description: '',
             points: 0
         }
+        this.assignmentService = AssignmentService.instance;
+        this.saveAssignment=this.saveAssignment.bind(this);
+        this.update=this.update.bind(this);
     }
 
     componentDidMount() {
         const {navigation} = this.props;
-        const topicId = navigation.getParam("topicId")
-        this.setState({topicId:topicId})
+        const assignmentId = navigation.getParam("assignmentId",1)
+        this.setState({assignmentId:assignmentId})
+        this.assignmentService.findAssignmentById(assignmentId)
+            .then(assignment=>(
+                this.setState({
+                    title:assignment.title,
+                    description:assignment.description,
+                    points:assignment.points})
+            ))
     }
 
     update(updatedState){
@@ -36,22 +47,23 @@ class Assignment extends Component {
             points: this.state.points,
             widgetType: 'Assignment'
         }
-
+        this.assignmentService.saveAssignment(this.state.assignmentId, assignment)
+            .then(Alert.alert("Assignment updated successfully"))
     }
 
     render() {
         return(
             <ScrollView>
                 <FormLabel>Title</FormLabel>
-                <FormInput onChangeText={ text => this.update({title: text})}/>
+                <FormInput value={this.state.title} onChangeText={ text => this.update({title: text})}/>
                 <FormValidationMessage> Title is required </FormValidationMessage>
 
                 <FormLabel>Description</FormLabel>
-                <FormInput onChangeText={ text => this.update({description: text})}/>
+                <FormInput value={this.state.description} onChangeText={ text => this.update({description: text})}/>
                 <FormValidationMessage> Description is required </FormValidationMessage>
 
                 <FormLabel>Points</FormLabel>
-                <FormInput onChangeText={ points => this.update({points: points}) }/>
+                <FormInput value={(this.state.points).toString()} onChangeText={ points => this.update({points: points}) }/>
                 <FormValidationMessage> Points is required </FormValidationMessage>
 
                 <Button style={style.buttonStyle}
@@ -64,8 +76,7 @@ class Assignment extends Component {
                        color="white"
                        title="Cancel"
                        onPress={() => { this.props.navigation
-                                        .navigate("WidgetList", {lessonId: this.state.lessonId})
-                                      }}/>
+                                        .navigate("WidgetList", {lessonId: this.state.lessonId})}}/>
                 <Text h2>Preview</Text>
                 <View style={style.viewStyle}>
                 <Text h3>{this.state.title}</Text>
