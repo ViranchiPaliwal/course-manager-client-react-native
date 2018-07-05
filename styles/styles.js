@@ -40,5 +40,11 @@ export default StyleSheet.create({
         backgroundColor:'white',
         borderRadius:5,
         paddingLeft:5
+    },
+    examWidgetTitle: {
+        flex: 1,
+        flexDirection:'row',
+        backgroundColor:'lightgrey',
+        padding:10
     }
 })

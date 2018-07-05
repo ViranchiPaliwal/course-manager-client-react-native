@@ -4,7 +4,7 @@ import style from '../styles/styles';
 import {Text, Button, FormLabel, FormInput, FormValidationMessage} from 'react-native-elements'
 import AssignmentService from "../services/AssignmentService";
 
-class Assignment extends Component {
+class AssignmentWidget extends Component {
     static navigationOptions = {
         title: 'Assignment',
         headerStyle:{backgroundColor: "#007bff"}
@@ -95,4 +95,4 @@ class Assignment extends Component {
         )
     }
 }
-export default Assignment
+export default AssignmentWidget
