@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import {View, Alert, ScrollView, TextInput} from 'react-native'
 import style from '../styles/styles';
-import {Text, Button, FormLabel, FormInput, FormValidationMessage, Icon} from 'react-native-elements'
-import FillInTheBlankService from "../services/FillInTheBlankService";
-class FillInTheBlanksQuestionWidget extends Component {
+import {Text, Button, FormLabel, FormInput, FormValidationMessage, Icon, CheckBox} from 'react-native-elements'
+import TrueFalseService from "../services/TrueFalseService";
+class TrueOrFalseQuestionWidget extends Component {
     static navigationOptions = {
-        title: 'Fill in the blank editor',
+        title: 'True or false editor',
         headerStyle:{backgroundColor: "#007bff"}
     }
 
@@ -17,12 +17,9 @@ class FillInTheBlanksQuestionWidget extends Component {
             description:"",
             points:"",
             question:'',
-            correctOption:'',
-            variable:'',
-            expression:'',
-            previewExp:''
+            isTrue: false
         }
-        this.fillInTheBlankService = FillInTheBlankService.instance;
+        this.trueFalseService = TrueFalseService.instance;
         this.updateFIB = this.updateFIB.bind(this);
         this.updateState = this.updateState.bind(this);
         this.updateExpression = this.updateExpression.bind(this);
@@ -38,45 +35,27 @@ class FillInTheBlanksQuestionWidget extends Component {
             subtitle: question.subtitle,
             description: question.description,
             points: question.points,
-            variables: question.variables,
-            expression: question.expression
+            isTrue: question.isTrue
         })
-        this.updatePreviewExp(question.expression)
     }
 
     updateState(updatedState){
         this.setState(updatedState)
     }
 
-    updateFIB(){
-        let fibQuestion={
+    updateTOF(){
+        let TOFQuestion = {
             title: this.state.title,
             subtitle: this.state.subtitle,
             description: this.state.description,
             points: this.state.points,
-            variables: this.state.variables,
-            expression: this.state.expression,
-            questionType:'FB'
+            isTrue: this.state.isTrue
         }
 
-        this.fillInTheBlankService.saveFillInTheBlankQuestion(this.state.question.id, fibQuestion)
-            .then(Alert.alert("Fill-in the blank question updated successfully."))
+        this.trueFalseService.saveTrueFalseQuestion(this.state.question.id, TOFQuestion)
+            .then(Alert.alert("True/false question updated successfully."))
     }
 
-    updateExpression(expression){
-        let variables=''
-        var variablesWithBracket = expression.match(/\[(.*?)\]/g)
-        for(var variable in variablesWithBracket)
-            variables = variables + " " + variable
-        this.setState({variables: variables})
-        this.setState({expression: expression})
-        this.updatePreviewExp(expression)
-    }
-
-    updatePreviewExp(expression){
-        var exp = expression.replace(/\[(.*?]*)\]/g,'~')
-        this.updateState({previewExp:exp})
-    }
 
     render() {
         return(
@@ -104,16 +83,13 @@ class FillInTheBlanksQuestionWidget extends Component {
                     value ={(this.state.points).toString()}
                     onChangeText={ text => this.updateState({points: text})}/>
 
-                <FormLabel>Expression</FormLabel>
-                <FormInput
-                    value ={this.state.expression}
-                    onChangeText={ text => this.updateExpression(text)}/>
-                <FormValidationMessage> Expression is required </FormValidationMessage>
+                <CheckBox onPress={() => this.updateState({isTrue:!this.state.isTrue})}
+                          checked={this.state.isTrue} title='The answer is true.'/>
 
                 <Button	backgroundColor="blue"
                            color="white"
                            title="Save"
-                           onPress={() => {this.updateFIB()}}/>
+                           onPress={() => {this.updateTOF()}}/>
 
                 <Button	backgroundColor="green"
                            color="white"
@@ -125,13 +101,7 @@ class FillInTheBlanksQuestionWidget extends Component {
                 <Text h3>{this.state.subtitle}</Text>
                 <Text h4>{this.state.description}</Text>
                 <Text h4>{this.state.points}</Text>
-                {this.state.previewExp.split('~').map((text,index)=>{
-                    return (
-                        <View>
-                            {previewExpression(text)}
-                        </View>
-                    )
-                })}
+                <CheckBox checked={this.state.isTrue} title='The answer is true.'/>
             </ScrollView>
         )
     }

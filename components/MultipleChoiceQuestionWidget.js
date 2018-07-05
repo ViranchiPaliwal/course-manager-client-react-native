@@ -117,6 +117,7 @@ class MultipleChoiceQuestionWidget extends Component {
 
                 <Text h2>Preview</Text>
                 <Text h3>{this.state.title}</Text>
+                <Text h3>{this.state.subtitle}</Text>
                 <Text h4>{this.state.description}</Text>
                 <Text h4>{this.state.points}</Text>
                 <ButtonGroup
