@@ -2,10 +2,10 @@ import React, {Component} from 'react'
 import {View, Alert, ScrollView, TextInput} from 'react-native'
 import style from '../styles/styles';
 import {Text, Button, FormLabel, FormInput, FormValidationMessage, Icon} from 'react-native-elements'
-import MultipleChoiceService from "../services/MultipleChoiceService";
-class MultipleChoiceQuestionWidget extends Component {
+import FillInTheBlankService from "../services/FillInTheBlankService";
+class FillInTheBlanksQuestionWidget extends Component {
     static navigationOptions = {
-        title: 'MCQ',
+        title: 'Fill in the blank editor',
         headerStyle:{backgroundColor: "#007bff"}
     }
 
@@ -18,12 +18,15 @@ class MultipleChoiceQuestionWidget extends Component {
             points:"",
             question:'',
             correctOption:'',
-            options:[]
+            variable:'',
+            expression:'',
+            previewExp:''
         }
-        this.multipleChoiceService = MultipleChoiceService.instance
-        this.updateMCQ = this.updateMCQ.bind(this)
-        this.updateOption = this.updateOption.bind(this)
-        this.updateState = this.updateState.bind(this)
+        this.fillInTheBlankService = FillInTheBlankService.instance;
+        this.updateFIB = this.updateFIB.bind(this);
+        this.updateState = this.updateState.bind(this);
+        this.updateExpression = this.updateExpression.bind(this);
+        this.updatePreviewExp = this.updatePreviewExp.bind(this);
     }
 
     componentDidMount() {
@@ -35,44 +38,46 @@ class MultipleChoiceQuestionWidget extends Component {
             subtitle: question.subtitle,
             description: question.description,
             points: question.points,
-            correctOption: question.correctOption,
+            variables: question.variables,
+            expression: question.expression
         })
-        this.updateOption(question.options)
-
-    }
-
-    updateOption() {
-        if(!question.options){
-            let options = question.options
-            if(question.options.contain(',')){
-                options = question.options.split(',')
-            }
-            this.setState({options:options})
-        }
+        this.updatePreviewExp(question.expression)
     }
 
     updateState(updatedState){
         this.setState(updatedState)
     }
 
-    updateMCQ(){
-        let options=''
-        for(var option in this.state.options)
-            options = options + "~" + option
-
-        let question={
+    updateFIB(){
+        let fibQuestion={
             title: this.state.title,
             subtitle: this.state.subtitle,
             description: this.state.description,
             points: this.state.points,
-            correctOption: this.state.correctOption+1,
-            options: options,
-            questionType:'MC'
+            variables: this.state.variables,
+            expression: this.state.expression,
+            questionType:'FB'
         }
 
-        this.multipleChoiceService.saveMultipleChoiceQuestion(this.state.question.id,question)
-            .then(Alert.alert("Multiple choice question updated successfully."))
+        this.fillInTheBlankService.saveFillInTheBlankQuestion(this.state.question.id, fibQuestion)
+            .then(Alert.alert("Fill-in the blank question updated successfully."))
     }
+
+    updateExpression(expression){
+        let variables=''
+        var variablesWithBracket = expression.match(/\[(.*?)\]/g)
+        for(var variable in variablesWithBracket)
+            variables = variables + " " + variable
+        this.setState({variables: variables})
+        this.setState({expression: expression})
+        this.updatePreviewExp(expression)
+    }
+
+    updatePreviewExp(expression){
+        var exp = expression.replace(/\[(.*?]*)\]/g,'~')
+        this.updateState({previewExp:exp})
+    }
+
     render() {
         return(
             <ScrollView>
@@ -99,18 +104,18 @@ class MultipleChoiceQuestionWidget extends Component {
                     value ={(this.state.points).toString()}
                     onChangeText={ text => this.updateState({points: text})}/>
 
-                <FormLabel>Options</FormLabel>
+                <FormLabel>Expression</FormLabel>
                 <FormInput
-                    value ={this.state.options}
-                    onChangeText={ text => this.updateOption(text)}/>
-                <FormValidationMessage> Options are required </FormValidationMessage>
+                    value ={this.state.expression}
+                    onChangeText={ text => this.updateExpression(text)}/>
+                <FormValidationMessage> Expression is required </FormValidationMessage>
 
                 <Button	backgroundColor="blue"
                            color="white"
                            title="Save"
-                           onPress={() => {this.updateMCQ()}}/>
+                           onPress={() => {this.updateFIB()}}/>
 
-                <Button	backgroundColor="yellow"
+                <Button	backgroundColor="green"
                            color="white"
                            title="Cancel"
                            onPress={() => { this.props.navigation.goBack()}}/>
@@ -119,12 +124,23 @@ class MultipleChoiceQuestionWidget extends Component {
                 <Text h3>{this.state.title}</Text>
                 <Text h4>{this.state.description}</Text>
                 <Text h4>{this.state.points}</Text>
-                <ButtonGroup
-                    onPress={this.updateCorrectOption}
-                    selectedIndex={this.state.correctOption}
-                    buttons={this.state.options} />
+                {this.state.previewExp.split('~').map((text,index)=>{
+                    return (
+                        <View>
+                            {previewExpression(text)}
+                        </View>
+                    )
+                })}
             </ScrollView>
         )
+    }
+
+    previewExpression(text) {
+        if(text==='~'){
+            return <TextInput style={{width:120}} />
+        }else{
+            return <Text>text</Text>
+        }
     }
 }
 export default MultipleChoiceQuestionWidget
