@@ -3,6 +3,7 @@ import {View, Alert, ScrollView, TextInput} from 'react-native'
 import style from '../styles/styles';
 import {Text, Button, FormLabel, FormInput, FormValidationMessage, Icon} from 'react-native-elements'
 import FillInTheBlankService from "../services/FillInTheBlankService";
+
 class FillInTheBlanksQuestionWidget extends Component {
     static navigationOptions = {
         title: 'Fill-in the blank',
@@ -152,13 +153,13 @@ class FillInTheBlanksQuestionWidget extends Component {
                 <Text style={style.textMargin} h4>{this.state.subtitle}</Text>
                 <Text style={style.descriptionStyle}>{this.state.description}</Text>
                 <View style={style.textMargin}>
-                {this.state.previewExp.split('|').map((text, index)=>{
-                    return (
-                        <View key={index}>
-                            {this.previewExpression(text)}
-                        </View>
-                    )
-                })}
+                    {this.state.previewExp.split('|').map((text, index)=>{
+                        return (
+                            <View key={index}>
+                                {this.previewExpression(text)}
+                            </View>
+                        )
+                    })}
                 </View>
                 <View style={style.partitioner}/>
                 <View style={style.partitioner}/>

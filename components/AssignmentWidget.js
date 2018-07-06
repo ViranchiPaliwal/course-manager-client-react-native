@@ -73,18 +73,18 @@ class AssignmentWidget extends Component {
                         title="Submit"
                         onPress={() => {this.saveAssignment()}}/>
                 <Button style={style.buttonStyle}
-                       backgroundColor="red"
-                       color="white"
-                       title="Cancel"
-                       onPress={() => { this.props.navigation.goBack()}}/>
+                        backgroundColor="red"
+                        color="white"
+                        title="Cancel"
+                        onPress={() => { this.props.navigation.goBack()}}/>
                 <View style={style.partitioner}/>
                 <View style={style.partitioner}/>
                 <View style={style.preview}>
-                <Text h4 style={style.previewText}>Preview</Text>
+                    <Text h4 style={style.previewText}>Preview</Text>
                 </View>
                 <View style={style.viewStyle}>
-                <Text h4 >{this.state.title}</Text>
-                <Text h4 >{this.state.points} pts</Text>
+                    <Text h4 >{this.state.title}</Text>
+                    <Text h4 >{this.state.points} pts</Text>
                 </View>
                 <Text style={style.descriptionStyle}>{this.state.description}</Text>
 

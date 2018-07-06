@@ -21,15 +21,15 @@ class CourseList extends Component {
 
     render() {
         return(
-        <View style={{padding: 15}}>
-            {this.state.courses.map
-            ((course, index) => (
-                <ListItem
-                    title={course.title}
-                    key={index}
-                    onPress={() => this.props.navigation.navigate("ModuleList", {courseId: course.id})}/>
-            ))}
-        </View>
+            <View style={{padding: 15}}>
+                {this.state.courses.map
+                ((course, index) => (
+                    <ListItem
+                        title={course.title}
+                        key={index}
+                        onPress={() => this.props.navigation.navigate("ModuleList", {courseId: course.id})}/>
+                ))}
+            </View>
         )
     }
 }

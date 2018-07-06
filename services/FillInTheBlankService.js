@@ -1,6 +1,7 @@
 const FILLINTHEBLANK_URL = "http://localhost:8080/api/blanks/questionId"
 const FILLINTHEBLANK_EXAM_URL = "http://localhost:8080/api/exam/examId/blanks"
 let _singleton = Symbol();
+
 export default class FillInTheBlankService {
     constructor(singletonToken) {
         if (_singleton !== singletonToken)

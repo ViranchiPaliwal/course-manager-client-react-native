@@ -41,7 +41,7 @@ export default class ExamService{
             body: JSON.stringify(exam)
         })
     }
-    
+
     deleteExam(examId){
         fetch(EXAM_URL.replace('examId', examId),{
             method:'delete'

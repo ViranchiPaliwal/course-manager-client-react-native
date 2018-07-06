@@ -3,6 +3,7 @@ import {View, Alert, ScrollView, TextInput} from 'react-native'
 import style from '../styles/styles';
 import {Text, Button, FormLabel, FormInput, FormValidationMessage, Icon, ButtonGroup} from 'react-native-elements'
 import MultipleChoiceService from "../services/MultipleChoiceService";
+
 class MultipleChoiceQuestionWidget extends Component {
     static navigationOptions = {
         title: 'MCQ',
@@ -110,7 +111,7 @@ class MultipleChoiceQuestionWidget extends Component {
                     onChangeText={ text => this.updateState({points: text})}/>
                 {this.state.points === "" && <FormValidationMessage>Points are required</FormValidationMessage>}
 
-                    <FormLabel>Options</FormLabel>
+                <FormLabel>Options</FormLabel>
                 <FormInput
                     value ={this.state.options}
                     onChangeText={ text => this.updateOption(text)}/>

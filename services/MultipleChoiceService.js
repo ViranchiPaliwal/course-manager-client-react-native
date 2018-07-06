@@ -1,5 +1,6 @@
 const MULTIPLECHOICE_URL = "http://localhost:8080/api/choice/questionId"
 const MULTIPLECHOICE_EXAM_URL = "http://localhost:8080/api/exam/examId/choice"
+
 let _singleton = Symbol();
 export default class MultipleChoiceService {
     constructor(singletonToken) {
@@ -23,8 +24,8 @@ export default class MultipleChoiceService {
 
     deleteMultiChoiceQuestion(questionId){
         return fetch(MULTIPLECHOICE_URL.replace('questionId', questionId), {
-                method: 'DELETE'
-            })
+            method: 'DELETE'
+        })
     }
 
     addMultipleChoiceQuestion(examId){

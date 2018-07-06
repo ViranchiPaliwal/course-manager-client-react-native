@@ -3,6 +3,7 @@ import {View, Alert, ScrollView, TextInput} from 'react-native'
 import style from '../styles/styles';
 import {Text, Button, FormLabel, FormInput, FormValidationMessage, Icon} from 'react-native-elements'
 import EssayService from "../services/EssayService";
+
 class EssayQuestionWidget extends Component {
     static navigationOptions = {
         title: 'Essay',

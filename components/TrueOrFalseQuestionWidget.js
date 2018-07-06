@@ -3,6 +3,7 @@ import {View, Alert, ScrollView, TextInput} from 'react-native'
 import style from '../styles/styles';
 import {Text, Button, FormLabel, FormInput, FormValidationMessage, Icon, CheckBox} from 'react-native-elements'
 import TrueFalseService from "../services/TrueFalseService";
+
 class TrueOrFalseQuestionWidget extends Component {
     static navigationOptions = {
         title: 'True or false',

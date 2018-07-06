@@ -60,7 +60,7 @@ class WidgetList extends Component {
             widgetType:"Assignment"
         }
 
-         this.assignmentService.addAssignment(this.state.topicId, assignment)
+        this.assignmentService.addAssignment(this.state.topicId, assignment)
             .then(response => (response.json()))
             .then(()=>( this.findAllAssignmentsForTopic(this.state.topicId)))
     }
@@ -97,29 +97,29 @@ class WidgetList extends Component {
             <ScrollView style={style.scrollView}>
                 <View>
                     <View style={style.addWidgetView}>
-                            <View style={style.addWidgetTextView}>
-                                <TextInput style={style.addWidgetTextViewInput} onChangeText={(text)=>{
-                                    this.setState({assignmentTitle:text})
-                                }} placeholder="Add Assignment"/>
-                            </View>
-                            <View style={style.addWidgetIconView}>
-                                <Icon
-                                    color='white'
-                                    name='note-add'
-                                    onPress={()=> this.addAssignment()}
-                                />
-                            </View>
+                        <View style={style.addWidgetTextView}>
+                            <TextInput style={style.addWidgetTextViewInput} onChangeText={(text)=>{
+                                this.setState({assignmentTitle:text})
+                            }} placeholder="Add Assignment"/>
                         </View>
-                        <View>
-                            {this.state.assignments.map(
-                                (assignment, index) => (
-                                    <ListItem
-                                        onPress={() => this.props.navigation.navigate("AssignmentWidget", {assignmentId: assignment.id})}
-                                        key={index}
-                                        leftIcon={<Icon name="subject"/>}
-                                        rightIcon={<Icon name="delete" onPress={()=> this.deleteAssignment(assignment.id)}/>}
-                                        title={assignment.title}/>))}
+                        <View style={style.addWidgetIconView}>
+                            <Icon
+                                color='white'
+                                name='note-add'
+                                onPress={()=> this.addAssignment()}
+                            />
                         </View>
+                    </View>
+                    <View>
+                        {this.state.assignments.map(
+                            (assignment, index) => (
+                                <ListItem
+                                    onPress={() => this.props.navigation.navigate("AssignmentWidget", {assignmentId: assignment.id})}
+                                    key={index}
+                                    leftIcon={<Icon name="subject"/>}
+                                    rightIcon={<Icon name="delete" onPress={()=> this.deleteAssignment(assignment.id)}/>}
+                                    title={assignment.title}/>))}
+                    </View>
                     <View style={style.addWidgetView}>
                         <View style={style.addWidgetTextView}>
                             <TextInput style={style.addWidgetTextViewInput} onChangeText={(text)=>{

@@ -46,7 +46,7 @@ export default class QuestionService{
             return this.trueFalseService.addTrueFalseQuestion(examId)
         }
         else {
-           return this.essayService.addEssayQuestion(examId)
+            return this.essayService.addEssayQuestion(examId)
         }
     }
 }

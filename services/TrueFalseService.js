@@ -1,5 +1,6 @@
 const TRUEFALSE_URL = "http://localhost:8080/api/truefalse/questionId"
 const TRUEFALSE_EXAM_URL = "http://localhost:8080/api/exam/examId/truefalse"
+
 let _singleton = Symbol();
 export default class TrueFalseService {
     constructor(singletonToken) {
