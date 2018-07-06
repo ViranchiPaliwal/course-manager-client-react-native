@@ -1,4 +1,6 @@
 const ASSIGNMENT_URL = "http://localhost:8080/api/assignment/assgnID"
+const ASSIGNMENT_TOPIC_URL = "http://localhost:8080/api/topic/topicId/assignment"
+
 let _singleton = Symbol();
 export default class AssignmentService{
     constructor(singletonToken) {
@@ -26,17 +28,23 @@ export default class AssignmentService{
     }
 
     findAllAssignmentsForTopic(topicId){
-        return fetch("http://localhost:8080/api/topic/"+topicId+"/assignment")
+        return fetch(ASSIGNMENT_TOPIC_URL.replace('topicId', topicId))
             .then(response=>(
                 response.json()
             ))
     }
 
     addAssignment(topicId,assignment){
-        return fetch("http://localhost:8080/api/topic/"+topicId+"/assignment",{
+        return fetch(ASSIGNMENT_TOPIC_URL.replace('topicId', topicId),{
             method: "post",
             headers: { 'content-type': 'application/json'},
             body: JSON.stringify(assignment)
+        })
+    }
+
+    deleteAssignment(assignmentId){
+        fetch(ASSIGNMENT_URL.replace('assgnID', assignmentId),{
+            method:'delete'
         })
     }
 }

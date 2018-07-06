@@ -36,8 +36,6 @@ export default class QuestionService{
     }
 
     addQuestion(examId, type){
-        return this.mulitpleChoiceService.addMultipleChoiceQuestion(examId)
-
         if(type==='MC'){
             return this.mulitpleChoiceService.addMultipleChoiceQuestion(examId)
         }

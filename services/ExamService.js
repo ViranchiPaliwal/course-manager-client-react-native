@@ -1,4 +1,6 @@
-const EXAM_URL = "http://localhost:8080/api/exam/examID"
+const EXAM_URL = "http://localhost:8080/api/exam/examId"
+const EXAM_TOPIC_URL = "http://localhost:8080/api/topic/topicId/exam"
+
 let _singleton = Symbol();
 export default class ExamService{
     constructor(singletonToken) {
@@ -13,12 +15,12 @@ export default class ExamService{
     }
 
     findExamById(examId){
-        return fetch(EXAM_URL.replace('examID', examId))
+        return fetch(EXAM_URL.replace('examId', examId))
             .then(response => (response.json()))
     }
 
     saveAssignment(examId, exam) {
-        return fetch(EXAM_URL.replace('examID', examId), {
+        return fetch(EXAM_URL.replace('examId', examId), {
             method: "put",
             headers: { 'content-type': 'application/json'},
             body: JSON.stringify(exam)
@@ -26,17 +28,23 @@ export default class ExamService{
     }
 
     findAllExamsForTopic(topicId){
-        return fetch("http://localhost:8080/api/topic/"+topicId+"/exam")
+        return fetch(EXAM_TOPIC_URL.replace('topicId', topicId))
             .then(response=>(
                 response.json()
             ))
     }
 
     addExam(topicId, exam){
-        return fetch("http://localhost:8080/api/topic/"+topicId+"/exam",{
+        return fetch(EXAM_TOPIC_URL.replace('topicId', topicId),{
             method: "post",
             headers: { 'content-type': 'application/json'},
             body: JSON.stringify(exam)
+        })
+    }
+    
+    deleteExam(examId){
+        fetch(EXAM_URL.replace('examId', examId),{
+            method:'delete'
         })
     }
 }

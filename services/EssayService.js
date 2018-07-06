@@ -1,4 +1,4 @@
-const ESSAY_URL = "http://localhost:8080/api/question/questionId/essay"
+const ESSAY_URL = "http://localhost:8080/api/essay/questionId"
 const ESSAY_EXAM_URL = "http://localhost:8080/api/exam/examId/essay"
 let _singleton = Symbol();
 export default class EssayService {
@@ -21,13 +21,19 @@ export default class EssayService {
         })
     }
 
+    deleteEssayQuestion(questionId){
+        return fetch(ESSAY_URL.replace('questionId', questionId), {
+            method: 'DELETE'
+        })
+    }
+
     addEssayQuestion(examId){
         const essayQuestion={
             title:'New Essay',
             description:'Essay description',
             points: 0,
             subtitle:'Essay',
-            questionType:'ES'
+            type:'ES'
         }
 
         return fetch(ESSAY_EXAM_URL.replace('examId', examId),{

@@ -1,4 +1,4 @@
-const TRUEFALSE_URL = "http://localhost:8080/api/question/questionId/truefalse"
+const TRUEFALSE_URL = "http://localhost:8080/api/truefalse/questionId"
 const TRUEFALSE_EXAM_URL = "http://localhost:8080/api/exam/examId/truefalse"
 let _singleton = Symbol();
 export default class TrueFalseService {
@@ -21,13 +21,20 @@ export default class TrueFalseService {
         })
     }
 
+    deleteTrueFalseQuestion(questionId){
+        return fetch(TRUEFALSE_URL.replace('questionId', questionId), {
+            method: 'DELETE'
+        })
+    }
+
     addTrueFalseQuestion(examId){
         const trueFalseQuestion = {
             title:'New TrueFalse',
             description:'TrueFalse description',
-            points: 0,
             subtitle:'True or false',
-            questionType:'TF'
+            points: 0,
+            isTrue: true,
+            type:'TF'
         }
 
         return fetch(TRUEFALSE_EXAM_URL.replace('examId', examId),{

@@ -1,4 +1,4 @@
-const FILLINTHEBLANK_URL = "http://localhost:8080/api/question/questionId/blanks"
+const FILLINTHEBLANK_URL = "http://localhost:8080/api/blanks/questionId"
 const FILLINTHEBLANK_EXAM_URL = "http://localhost:8080/api/exam/examId/blanks"
 let _singleton = Symbol();
 export default class FillInTheBlankService {
@@ -21,13 +21,21 @@ export default class FillInTheBlankService {
         })
     }
 
+    deleteFillInTheBlankQuestion(questionId){
+        return fetch(FILLINTHEBLANK_URL.replace('questionId', questionId), {
+            method: 'DELETE'
+        })
+    }
+
     addFillInTheBlankQuestion(examId){
         const fibQuestion = {
             title:'New Fill-in the blanks',
+            subtitle:'Fill-in the blanks',
             description:'Fill-in the blanks description',
             points: 0,
-            subtitle:'Fill-in the blanks',
-            questionType:'FB'
+            expression: '2 + 2 = [four=4]',
+            variable: '',
+            type:'FB'
         }
 
         return fetch(FILLINTHEBLANK_EXAM_URL.replace('examId', examId),{
