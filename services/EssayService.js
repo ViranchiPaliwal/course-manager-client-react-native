@@ -1,5 +1,5 @@
-const ESSAY_URL = "http://localhost:8080/api/essay/questionId"
-const ESSAY_EXAM_URL = "http://localhost:8080/api/exam/examId/essay"
+const ESSAY_URL = "https://web-dev-summer-react-native.herokuapp.com/api/essay/questionId"
+const ESSAY_EXAM_URL = "https://web-dev-summer-react-native.herokuapp.com/api/exam/examId/essay"
 
 let _singleton = Symbol();
 export default class EssayService {

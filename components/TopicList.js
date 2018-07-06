@@ -21,7 +21,7 @@ class TopicList extends Component {
         const courseId = navigation.getParam("courseId")
         const moduleId = navigation.getParam("moduleId")
         const lessonId = navigation.getParam("lessonId")
-        fetch("http://localhost:8080/api/course/"+1+"/module/"+1+"/lesson/"+1+"/topic")
+        fetch("https://web-dev-summer-react-native.herokuapp.com/api/course/"+1+"/module/"+1+"/lesson/"+1+"/topic")
             .then(response => (response.json()))
             .then(topics => this.setState({topics: topics}))
     }

@@ -1,5 +1,5 @@
-const ASSIGNMENT_URL = "http://localhost:8080/api/assignment/assgnID"
-const ASSIGNMENT_TOPIC_URL = "http://localhost:8080/api/topic/topicId/assignment"
+const ASSIGNMENT_URL = "https://web-dev-summer-react-native.herokuapp.com/api/assignment/assgnID"
+const ASSIGNMENT_TOPIC_URL = "https://web-dev-summer-react-native.herokuapp.com/api/topic/topicId/assignment"
 
 let _singleton = Symbol();
 export default class AssignmentService{

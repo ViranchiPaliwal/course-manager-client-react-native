@@ -3,7 +3,7 @@ import FillInTheBlankService from "./FillInTheBlankService";
 import TrueFalseService from "./TrueFalseService";
 import EssayService from "./EssayService";
 
-const QUESTION_URL = "http://localhost:8080/api/exam/examID/question"
+const QUESTION_URL = "https://web-dev-summer-react-native.herokuapp.com/api/exam/examID/question"
 let _singleton = Symbol();
 export default class QuestionService{
     constructor(singletonToken) {

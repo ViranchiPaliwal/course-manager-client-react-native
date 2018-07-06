@@ -11,7 +11,7 @@ class CourseList extends Component {
 
     constructor(props) {
         super(props)
-        fetch('http://localhost:8080/api/course')
+        fetch('https://web-dev-summer-react-native.herokuapp.com/api/course')
             .then(response => (response.json()))
             .then(courses => {
                 this.setState({courses: courses})

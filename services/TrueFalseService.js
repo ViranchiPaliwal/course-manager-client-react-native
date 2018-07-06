@@ -1,5 +1,5 @@
-const TRUEFALSE_URL = "http://localhost:8080/api/truefalse/questionId"
-const TRUEFALSE_EXAM_URL = "http://localhost:8080/api/exam/examId/truefalse"
+const TRUEFALSE_URL = "https://web-dev-summer-react-native.herokuapp.com/api/truefalse/questionId"
+const TRUEFALSE_EXAM_URL = "https://web-dev-summer-react-native.herokuapp.com/api/exam/examId/truefalse"
 
 let _singleton = Symbol();
 export default class TrueFalseService {

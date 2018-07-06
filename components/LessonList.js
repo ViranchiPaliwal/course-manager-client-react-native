@@ -21,7 +21,7 @@ class LessonList extends Component {
         const moduleId = navigation.getParam("moduleId")
         this.setState({courseId: courseId})
         this.setState({moduleId: moduleId})
-        fetch("http://localhost:8080/api/course/"+courseId+"/module/"+moduleId+"/lesson")
+        fetch("https://web-dev-summer-react-native.herokuapp.com/api/course/"+courseId+"/module/"+moduleId+"/lesson")
             .then(response => (response.json()))
             .then(lessons => this.setState({lessons: lessons}))
     }

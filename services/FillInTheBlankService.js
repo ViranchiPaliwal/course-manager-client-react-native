@@ -1,5 +1,5 @@
-const FILLINTHEBLANK_URL = "http://localhost:8080/api/blanks/questionId"
-const FILLINTHEBLANK_EXAM_URL = "http://localhost:8080/api/exam/examId/blanks"
+const FILLINTHEBLANK_URL = "https://web-dev-summer-react-native.herokuapp.com/api/blanks/questionId"
+const FILLINTHEBLANK_EXAM_URL = "https://web-dev-summer-react-native.herokuapp.com/api/exam/examId/blanks"
 let _singleton = Symbol();
 
 export default class FillInTheBlankService {

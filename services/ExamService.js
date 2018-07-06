@@ -1,5 +1,5 @@
-const EXAM_URL = "http://localhost:8080/api/exam/examId"
-const EXAM_TOPIC_URL = "http://localhost:8080/api/topic/topicId/exam"
+const EXAM_URL = "https://web-dev-summer-react-native.herokuapp.com/api/exam/examId"
+const EXAM_TOPIC_URL = "https://web-dev-summer-react-native.herokuapp.com/api/topic/topicId/exam"
 
 let _singleton = Symbol();
 export default class ExamService{

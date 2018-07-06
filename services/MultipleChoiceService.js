@@ -1,5 +1,5 @@
-const MULTIPLECHOICE_URL = "http://localhost:8080/api/choice/questionId"
-const MULTIPLECHOICE_EXAM_URL = "http://localhost:8080/api/exam/examId/choice"
+const MULTIPLECHOICE_URL = "https://web-dev-summer-react-native.herokuapp.com/api/choice/questionId"
+const MULTIPLECHOICE_EXAM_URL = "https://web-dev-summer-react-native.herokuapp.com/api/exam/examId/choice"
 
 let _singleton = Symbol();
 export default class MultipleChoiceService {
