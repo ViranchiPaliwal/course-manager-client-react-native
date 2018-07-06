@@ -3,7 +3,10 @@ import {View, Alert} from 'react-native'
 import {Text, ListItem} from 'react-native-elements'
 
 class TopicList extends Component {
-    static navigationOptions = {title: 'Topics'}
+    static navigationOptions = {title: 'Topics',
+        headerTintColor:'white',
+        headerStyle:{backgroundColor: "#007bff"}
+    }
     constructor(props) {
         super(props)
         this.state = {

@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
 import {View, Alert, ScrollView, TextInput, Picker} from 'react-native'
 import style from '../styles/styles';
-import {Text, Button, FormLabel, FormInput, FormValidationMessage, Icon} from 'react-native-elements'
+import {Text, Button, FormLabel, FormInput, FormValidationMessage, Icon, ListItem} from 'react-native-elements'
 import QuestionService from "../services/QuestionService";
+import FillInTheBlanksQuestionWidget from "./FillInTheBlanksQuestionWidget";
 
 class ExamWidget extends Component {
     static navigationOptions = {
         title: 'Question',
+        headerTintColor:'white',
         headerStyle:{backgroundColor: "#007bff"}
     }
 
@@ -15,12 +17,13 @@ class ExamWidget extends Component {
         this.state = {
             examId:'',
             questions:[],
-            questionType:0,
+            questionType:'MC',
             examTitle:''
         }
         this.questionService = QuestionService.instance;
         this.addQuestion=this.addQuestion.bind(this);
         this.update=this.update.bind(this);
+        this.findAllQuestionsByExamId = this.findAllQuestionsByExamId.bind(this)
     }
 
     componentDidMount() {
@@ -29,8 +32,12 @@ class ExamWidget extends Component {
         const examTitle = navigation.getParam("examTitle",'')
         this.setState({examId:examId})
         this.setState({examTitle:examTitle})
-        this.questionService.findAllQuestionsByExamId(examId)
-            .then(questions=>( this.setState({ questions: questions})))
+        this.findAllQuestionsByExamId(examId)
+    }
+
+    navigateBack = () => {
+        this.questionService.findAllQuestionsByExamId(this.state.examId)
+            .then(questions=>this.setState({questions:questions}))
     }
 
     update(updatedState){
@@ -38,22 +45,23 @@ class ExamWidget extends Component {
     }
 
     addQuestion(questionType){
-        this.questionService.addQuestion(questionType,this.state.examId)
-            .then(()=>this.questionService.findAllQuestionsByExamId(this.state.examId))
+        this.questionService.addQuestion(this.state.examId,questionType)
+            .then(() => this.findAllQuestionsByExamId(this.state.examId))
+    }
+
+    findAllQuestionsByExamId(examId){
+        this.questionService.findAllQuestionsByExamId(examId)
             .then(questions=>this.setState({questions:questions}))
     }
 
     render() {
         return <ScrollView>
             <View style={style.examWidgetTitle}>
-                <Text h2>{this.state.examTitle}</Text>
-            </View>
-            <View style={style.examWidgetTitle}>
-                <Text h3>Question</Text>
+                <Text h3>{this.state.examTitle}</Text>
             </View>
             <Picker
-                onValueChange={(itemValue, itemIndex) =>
-                    this.setState({questionType: itemValue})}
+                onValueChange={(itemValue) =>
+                    this.update({questionType: itemValue})}
                 selectedValue={this.state.questionType}>
                 <Picker.Item value="MC" label="Multiple choice"/>
                 <Picker.Item value="ES" label="Essay"/>
@@ -73,7 +81,7 @@ class ExamWidget extends Component {
             {this.state.questions.map(
                 (question, index) => {
                     return (
-                        <View>
+                        <View key={index}>
                             {this.selectCorrect(question)}
                         </View>
                     )})}
@@ -81,28 +89,36 @@ class ExamWidget extends Component {
     }
 
     selectCorrect(question){
-        if (question.type === "MultipleChoice") {
-           return <ListItem
-                    title= {question.title}
-                    leftIcon={<Icon name="list"/>}
-                    subtitle="Multiple choice"/>
-            }
-            else if (question.type === "FillInTheBlanks") {
+        if (question.type === "MC") {
             return <ListItem
-                    title="Question 1"
-                    leftIcon={<Icon name="code"/>}
-                    subtitle="Fill-in the blanks"/>
-            }
-            else if (question.type === "TrueFalse") {
+                title= {question.title}
+                leftIcon={<Icon name="list"/>}
+                subtitle={question.subtitle}
+                onPress={() => this.props.navigation.navigate("MultipleChoiceQuestionWidget",
+                    {question:question, backNavigation: this.navigateBack})}/>
+        }
+        else if (question.type === "FB") {
+            return <ListItem
+                title={question.title}
+                leftIcon={<Icon name="code"/>}
+                subtitle={question.subtitle}
+                onPress={()=>this.props.navigation.navigate("FillInTheBlanksQuestionWidget",
+                    {question:question, backNavigation: this.navigateBack})}/>
+        }
+        else if (question.type === "TF") {
             return  <ListItem
-                    title="Question 1"
-                    leftIcon={<Icon name="check"/>}
-                    subtitle="True or false"/>
-            }
-            else return <ListItem
-                    title="Question 1"
-                    leftIcon={<Icon name="subject"/>}
-                    subtitle="Multiple choice"/>
+                title={question.title}
+                leftIcon={<Icon name="check"/>}
+                subtitle={question.subtitle}
+                onPress={()=>this.props.navigation.navigate("TrueOrFalseQuestionWidget",
+                    {question:question, backNavigation: this.navigateBack})}/>
+        }
+        else return <ListItem
+                title={question.title}
+                leftIcon={<Icon name="subject"/>}
+                subtitle={question.subtitle}
+                onPress={()=>this.props.navigation.navigate("EssayQuestionWidget",
+                    {question:question, backNavigation: this.navigateBack})}/>
     }
 }
 export default ExamWidget

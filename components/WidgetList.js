@@ -6,7 +6,10 @@ import ExamService from "../services/ExamService";
 import style from '../styles/styles';
 
 class WidgetList extends Component {
-    static navigationOptions = {title: 'Widgets'}
+    static navigationOptions = {title: 'Widgets',
+        headerTintColor:'white',
+        headerStyle:{backgroundColor: "#007bff"}
+    }
     constructor(props) {
         super(props)
         this.state = {
@@ -62,6 +65,11 @@ class WidgetList extends Component {
             .then(()=>( this.findAllAssignmentsForTopic(this.state.topicId)))
     }
 
+    deleteAssignment(assignmentId){
+        this.assignmentService.deleteAssignment(assignmentId)
+        this.findAllAssignmentsForTopic(this.state.topicId)
+    }
+
     addExam(){
         if(!this.state.examTitle){
             Alert.alert("Provide title to add Exam.")
@@ -77,6 +85,11 @@ class WidgetList extends Component {
         this.examService.addExam(this.state.topicId, assignment)
             .then(response => (response.json()))
             .then(()=>( this.findAllExamsForTopic(this.state.topicId)))
+    }
+
+    deleteExam(examId){
+        this.examService.deleteExam(examId)
+        this.findAllExamsForTopic(this.state.topicId)
     }
 
     render() {
@@ -101,9 +114,10 @@ class WidgetList extends Component {
                             {this.state.assignments.map(
                                 (assignment, index) => (
                                     <ListItem
-                                        onPress={() => this.props.navigation
-                                            .navigate("AssignmentWidget", {assignmentId: assignment.id})}
+                                        onPress={() => this.props.navigation.navigate("AssignmentWidget", {assignmentId: assignment.id})}
                                         key={index}
+                                        leftIcon={<Icon name="subject"/>}
+                                        rightIcon={<Icon name="delete" onPress={()=> this.deleteAssignment(assignment.id)}/>}
                                         title={assignment.title}/>))}
                         </View>
                     <View style={style.addWidgetView}>
@@ -127,6 +141,8 @@ class WidgetList extends Component {
                                     onPress={() => this.props.navigation
                                         .navigate("ExamWidget", {examId: exam.id, examTitle: exam.title})}
                                     key={index}
+                                    leftIcon={<Icon name="list"/>}
+                                    rightIcon={<Icon name="delete" onPress={()=> this.deleteExam(exam.id)}/>}
                                     title={exam.title}/>))}
                     </View>
                 </View>

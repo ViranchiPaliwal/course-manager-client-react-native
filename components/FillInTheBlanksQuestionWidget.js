@@ -6,6 +6,7 @@ import FillInTheBlankService from "../services/FillInTheBlankService";
 class FillInTheBlanksQuestionWidget extends Component {
     static navigationOptions = {
         title: 'Fill in the blank editor',
+        headerTintColor:'white',
         headerStyle:{backgroundColor: "#007bff"}
     }
 
@@ -56,11 +57,13 @@ class FillInTheBlanksQuestionWidget extends Component {
             points: this.state.points,
             variables: this.state.variables,
             expression: this.state.expression,
-            questionType:'FB'
+            type:'FB'
         }
 
         this.fillInTheBlankService.saveFillInTheBlankQuestion(this.state.question.id, fibQuestion)
             .then(Alert.alert("Fill-in the blank question updated successfully."))
+            .then(()=>this.props.navigation.state.params.backNavigation())
+            .then(()=>this.props.navigation.goBack())
     }
 
     updateExpression(expression){
@@ -74,9 +77,16 @@ class FillInTheBlanksQuestionWidget extends Component {
     }
 
     updatePreviewExp(expression){
-        var exp = expression.replace(/\[(.*?]*)\]/g,'~')
+        var exp = expression.replace(/\[(.*?]*)\]/g,'|~|')
         this.updateState({previewExp:exp})
     }
+
+    deleteFIB(){
+        this.fillInTheBlankService.deleteFillInTheBlankQuestion(this.state.question.id)
+            .then(()=>this.props.navigation.state.params.backNavigation())
+            .then(()=>this.props.navigation.goBack())
+    }
+
 
     render() {
         return(
@@ -85,63 +95,83 @@ class FillInTheBlanksQuestionWidget extends Component {
                 <FormInput
                     value ={this.state.title}
                     onChangeText={ text => this.updateState({title: text})}/>
-                <FormValidationMessage> Title is required </FormValidationMessage>
+                {this.state.title === "" && <FormValidationMessage> Title is required </FormValidationMessage>}
 
                 <FormLabel>SubTitle</FormLabel>
                 <FormInput
                     value ={this.state.subtitle}
                     onChangeText={text => this.updateState({subtitle: text})}/>
-                <FormValidationMessage> Subtitle is required </FormValidationMessage>
+                {this.state.subtitle === "" && <FormValidationMessage> Subtitle is required </FormValidationMessage>}
 
                 <FormLabel>Description</FormLabel>
                 <FormInput
                     value ={this.state.description}
                     onChangeText={text => this.updateState({description: text})}/>
-                <FormValidationMessage>Description is required</FormValidationMessage>
+                {this.state.description === "" && <FormValidationMessage>Description is required</FormValidationMessage>}
 
                 <FormLabel>Points</FormLabel>
                 <FormInput
                     value ={(this.state.points).toString()}
                     onChangeText={ text => this.updateState({points: text})}/>
+                {this.state.points === "" && <FormValidationMessage>Points are required</FormValidationMessage>}
 
                 <FormLabel>Expression</FormLabel>
                 <FormInput
                     value ={this.state.expression}
                     onChangeText={ text => this.updateExpression(text)}/>
-                <FormValidationMessage> Expression is required </FormValidationMessage>
+                {this.state.expression === "" && <FormValidationMessage> Expression is required </FormValidationMessage>}
 
                 <Button	backgroundColor="blue"
+                           style={style.buttonStyle}
                            color="white"
                            title="Save"
                            onPress={() => {this.updateFIB()}}/>
 
                 <Button	backgroundColor="green"
+                           style={style.buttonStyle}
                            color="white"
                            title="Cancel"
                            onPress={() => { this.props.navigation.goBack()}}/>
 
-                <Text h2>Preview</Text>
-                <Text h3>{this.state.title}</Text>
-                <Text h3>{this.state.subtitle}</Text>
-                <Text h4>{this.state.description}</Text>
-                <Text h4>{this.state.points}</Text>
-                {this.state.previewExp.split('~').map((text,index)=>{
+                <Button	backgroundColor="red"
+                           style={style.buttonStyle}
+                           color="white"
+                           title="Delete"
+                           onPress={() => { this.deleteFIB() }}/>
+
+
+                <View style={style.partitioner}/>
+                <View style={style.partitioner}/>
+                <View style={style.preview}>
+                    <Text h4 style={style.previewText}>Preview</Text>
+                </View>
+                <View style={style.viewStyle}>
+                    <Text h4 >{this.state.title}</Text>
+                    <Text h4 >{this.state.points} pts</Text>
+                </View>
+                <Text style={style.textMargin} h4>{this.state.subtitle}</Text>
+                <Text style={style.descriptionStyle}>{this.state.description}</Text>
+                <View style={style.textMargin}>
+                {this.state.previewExp.split('|').map((text, index)=>{
                     return (
-                        <View>
-                            {previewExpression(text)}
+                        <View key={index}>
+                            {this.previewExpression(text)}
                         </View>
                     )
                 })}
+                </View>
+                <View style={style.partitioner}/>
+                <View style={style.partitioner}/>
             </ScrollView>
         )
     }
 
     previewExpression(text) {
         if(text==='~'){
-            return <TextInput style={{width:120}} />
+            return <TextInput style={style.fibStyle} />
         }else{
-            return <Text>text</Text>
+            return <Text>{text}</Text>
         }
     }
 }
-export default MultipleChoiceQuestionWidget
+export default FillInTheBlanksQuestionWidget

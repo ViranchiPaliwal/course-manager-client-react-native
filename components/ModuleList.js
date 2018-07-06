@@ -3,7 +3,10 @@ import {View} from 'react-native'
 import {Text, ListItem} from 'react-native-elements'
 
 class ModuleList extends Component {
-    static navigationOptions = {title: 'Modules'}
+    static navigationOptions = {title: 'Modules',
+        headerTintColor:'white',
+        headerStyle:{backgroundColor: "#007bff"}
+    }
     constructor(props) {
         super(props)
         this.state = {

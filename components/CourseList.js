@@ -3,7 +3,11 @@ import {View} from 'react-native'
 import {Text, ListItem} from 'react-native-elements'
 
 class CourseList extends Component {
-    static navigationOptions = {title: 'Courses'}
+    static navigationOptions = {
+        title: 'Courses',
+        headerTintColor:'white',
+        headerStyle:{backgroundColor: "#007bff"}
+    }
 
     constructor(props) {
         super(props)
