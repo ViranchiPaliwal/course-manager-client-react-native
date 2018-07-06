@@ -4,7 +4,8 @@ export default StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         flex: 1,
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        margin: 5
     },
     essayStyle: {
         height: 100,
@@ -12,9 +13,15 @@ export default StyleSheet.create({
         borderWidth: 0.5,
         backgroundColor:'white'
     },
+    linkStyle: {
+        borderColor: 'gray',
+        borderWidth: 0.5,
+        height: 30,
+        backgroundColor:'white'
+    },
     buttonStyle: {
         padding:5,
-        borderRadius: 5
+        borderRadius: 20
     },
     scrollViewStyle: {
         padding:15
@@ -45,6 +52,35 @@ export default StyleSheet.create({
         flex: 1,
         flexDirection:'row',
         backgroundColor:'lightgrey',
-        padding:10
+        padding:5,
+        justifyContent: 'center'
+    },
+    preview: {
+        justifyContent: 'center',
+        flex:1,
+        flexDirection: "row"
+    },
+    previewText: {
+        color: '#007bff',
+        fontWeight: 'bold'
+    },
+    partitioner: {
+        borderBottomColor: 'grey',
+        borderBottomWidth: 2,
+        margin:5
+    },
+    textMargin: {
+        margin:5
+    },
+    descriptionStyle: {
+        fontSize: 18,
+        margin: 5
+    },
+    fibStyle: {
+        height: 25,
+        width: 60,
+        borderColor: 'gray',
+        borderWidth: 0.5,
+        backgroundColor:'white'
     }
 })
