@@ -7,6 +7,7 @@ import AssignmentService from "../services/AssignmentService";
 class AssignmentWidget extends Component {
     static navigationOptions = {
         title: 'Assignment',
+        headerTintColor:'white',
         headerStyle:{backgroundColor: "#007bff"}
     }
 
@@ -56,20 +57,20 @@ class AssignmentWidget extends Component {
             <ScrollView>
                 <FormLabel>Title</FormLabel>
                 <FormInput value={this.state.title} onChangeText={ text => this.update({title: text})}/>
-                <FormValidationMessage> Title is required </FormValidationMessage>
+                {this.state.title === "" && <FormValidationMessage> Title is required </FormValidationMessage>}
 
                 <FormLabel>Description</FormLabel>
                 <FormInput value={this.state.description} onChangeText={ text => this.update({description: text})}/>
-                <FormValidationMessage> Description is required </FormValidationMessage>
+                {this.state.description === "" && <FormValidationMessage> Description is required </FormValidationMessage>}
 
                 <FormLabel>Points</FormLabel>
                 <FormInput value={(this.state.points).toString()} onChangeText={ points => this.update({points: points}) }/>
-                <FormValidationMessage> Points is required </FormValidationMessage>
+                {this.state.points === "" && <FormValidationMessage> Points are required </FormValidationMessage>}
 
                 <Button style={style.buttonStyle}
                         backgroundColor="green"
                         color="white"
-                        title="Save"
+                        title="Submit"
                         onPress={() => {this.saveAssignment()}}/>
                 <Button style={style.buttonStyle}
                        backgroundColor="red"
@@ -77,19 +78,31 @@ class AssignmentWidget extends Component {
                        title="Cancel"
                        onPress={() => { this.props.navigation
                                         .navigate("WidgetList", {lessonId: this.state.lessonId})}}/>
-                <Text h2>Preview</Text>
-                <View style={style.viewStyle}>
-                <Text h3>{this.state.title}</Text>
-                <Text h4>{this.state.points}</Text>
+                <View style={style.partitioner}/>
+                <View style={style.partitioner}/>
+                <View style={style.preview}>
+                <Text h4 style={style.previewText}>Preview</Text>
                 </View>
-                <Text >{this.state.description}</Text>
+                <View style={style.viewStyle}>
+                <Text h4 >{this.state.title}</Text>
+                <Text h4 >{this.state.points} pts</Text>
+                </View>
+                <Text style={style.descriptionStyle}>{this.state.description}</Text>
 
-                <Text h4>Essay Answer</Text>
+                <Text h4 style={style.textMargin}>Essay Answer</Text>
                 <TextInput style={style.essayStyle}/>
 
-                <Text h3>Upload a file</Text>
+                <Text h4 style={style.textMargin}>Upload a file</Text>
+                <Button style={style.buttonStyle}
+                        backgroundColor="#007bff"
+                        color="white"
+                        title="Choose File"
+                        onPress={() => {this.saveAssignment()}}/>
 
-                <Text h3>Submit a Link</Text>
+                <Text h4 style={style.textMargin}>Submit a Link</Text>
+                <TextInput style={style.linkStyle}/>
+                <View style={style.partitioner}/>
+                <View style={style.partitioner}/>
 
             </ScrollView>
         )
