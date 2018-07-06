@@ -5,7 +5,7 @@ import {Text, Button, FormLabel, FormInput, FormValidationMessage, Icon} from 'r
 import FillInTheBlankService from "../services/FillInTheBlankService";
 class FillInTheBlanksQuestionWidget extends Component {
     static navigationOptions = {
-        title: 'Fill in the blank editor',
+        title: 'Fill-in the blank',
         headerTintColor:'white',
         headerStyle:{backgroundColor: "#007bff"}
     }

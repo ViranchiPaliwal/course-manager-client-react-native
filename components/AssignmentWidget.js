@@ -76,8 +76,7 @@ class AssignmentWidget extends Component {
                        backgroundColor="red"
                        color="white"
                        title="Cancel"
-                       onPress={() => { this.props.navigation
-                                        .navigate("WidgetList", {lessonId: this.state.lessonId})}}/>
+                       onPress={() => { this.props.navigation.goBack()}}/>
                 <View style={style.partitioner}/>
                 <View style={style.partitioner}/>
                 <View style={style.preview}>

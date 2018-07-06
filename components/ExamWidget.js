@@ -7,7 +7,7 @@ import FillInTheBlanksQuestionWidget from "./FillInTheBlanksQuestionWidget";
 
 class ExamWidget extends Component {
     static navigationOptions = {
-        title: 'Question',
+        title: 'Questions',
         headerTintColor:'white',
         headerStyle:{backgroundColor: "#007bff"}
     }

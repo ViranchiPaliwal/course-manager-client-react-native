@@ -5,7 +5,7 @@ import {Text, Button, FormLabel, FormInput, FormValidationMessage, Icon, CheckBo
 import TrueFalseService from "../services/TrueFalseService";
 class TrueOrFalseQuestionWidget extends Component {
     static navigationOptions = {
-        title: 'True or false editor',
+        title: 'True or false',
         headerTintColor:'white',
         headerStyle:{backgroundColor: "#007bff"}
     }
